@@ -1,4 +1,5 @@
 ARCHIVE
+lib
 *.log
 *.xlsx
 Events50
