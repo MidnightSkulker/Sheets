@@ -1,4 +1,6 @@
 ARCHIVE
+credentials.json
+token.pickle
 lib
 *.log
 *.xlsx
