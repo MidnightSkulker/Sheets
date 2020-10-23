@@ -7,7 +7,6 @@ from src.Scopes import *
 # The ID and range of a sample spreadsheet.
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
-
 def main():
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
