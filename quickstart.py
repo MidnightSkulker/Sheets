@@ -1,12 +1,10 @@
 from __future__ import print_function
 from google.auth.transport.requests import Request
 from src.Credentials import *
-
-# If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+from src.Sheets import *
+from src.Scopes import *
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
 
 
@@ -15,7 +13,7 @@ def main():
     Prints values from a sample spreadsheet.
     """
     # Open the spread sheets using the OAuth protocol
-    service = openSheet(SAMPLE_SPREADSHEET_ID, SCOPES)
+    service = openSheet(SAMPLE_SPREADSHEET_ID, [readOnly])
     
     # Call the Sheets API
     sheet = service.spreadsheets()
