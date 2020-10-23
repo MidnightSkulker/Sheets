@@ -1,8 +1,9 @@
 from __future__ import print_function
 from google.auth.transport.requests import Request
 from src.Credentials import *
-from src.Sheets import *
+from src.SheetIds import *
 from src.Scopes import *
+from src.Sheets import *
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_RANGE_NAME = 'Class Data!A2:E'
@@ -14,12 +15,9 @@ def main():
     # Open the spread sheets using the OAuth protocol
     service = openSheet(SAMPLE_SPREADSHEET_ID, [readOnly])
     
-    # Call the Sheets API
-    sheet = service.spreadsheets()
-    result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                range=SAMPLE_RANGE_NAME).execute()
-    values = result.get('values', [])
-
+    # Get the 2 columns from the spread sheet, using the sheets API
+    values = get2Columns(service, SAMPLE_SPREADSHEET_ID, SAMPLE_RANGE_NAME)
+    
     if not values:
         print('No data found.')
     else:
