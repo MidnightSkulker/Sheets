@@ -1,13 +1,25 @@
 # Functions to manipulate Google Sheets
 from sheetfu import *
+import re
 
 red = '#ff0000'
 blue = '#0000ff'
 green = '#37761c'
 purple = '#9900ff'
+black = '#000000'
 colorsToIgnore = [red, blue, green, purple]
 namesToIgnore = ['Totals', 'Remaining', 'Check Sum', 'Paid', 'Debt']
 monthRow = 2
+
+# Find a column for the specified month
+def getMonthCol(sheet: object, month: str) -> int:
+    data_range = sheet.get_data_range()
+    values = data_range.get_values()
+    maxCol = data_range.get_max_column()
+    for j in range(0, maxCol):
+        cellValue = values[monthRow][j]
+        if re.match(month, cellValue): return j
+    return None
 
 # Load the spreadsheet for Grace's classes from Google Sheets
 def loadGrace ():
@@ -16,22 +28,28 @@ def loadGrace ():
     sheet = spreadsheet.get_sheet_by_name('GracesClass')
     return sheet
 
-def getStudentNames(sheet: object) -> list:
+def getStudentSheetInfo(sheet: object, month: int) -> list:
     data_range = sheet.get_data_range()
     values = data_range.get_values()
     colors = data_range.get_font_colors()
     maxRow = data_range.get_max_row()
+    # Determine which column is for the month requested.
+    monthCol = getMonthCol(sheet, month)
+    if monthCol == None: return None
     names = []
     for j in range(0,maxRow):
         potentialStudent = values[j][0] # Student Name
         status = values[j][1] # Gone or Break
+        charge = values[j][monthCol]
+        chargeColor = colors[j][monthCol]
+        if not chargeColor: chargeColor = black
         if str(potentialStudent).isnumeric(): continue
         if potentialStudent is None or potentialStudent == '': continue
         if potentialStudent in namesToIgnore: continue
         color = colors[j][0]
         if color in colorsToIgnore: continue
         if (status == 'Break') or (status == 'Gone'): continue
-        names.append({'row': j, 'name': potentialStudent})
+        names.append({'row': j, 'name': potentialStudent, 'charge': charge, 'color': chargeColor})
     return names
         
 # Read the first column, and get all the student names and their row numbers.
@@ -58,12 +76,14 @@ def get2Columns(sheet: object, rge: list) -> list:
     values = result.get('values', [])
     return values
 
-# Print the month row
-def printMonthRow(service, sheetId: str, mr:int):
+# Find a column for the specified month
+def getMonthCol(sheet: object, month: str) -> int:
     data_range = sheet.get_data_range()
     values = data_range.get_values()
-    maxCol = data_range.get_max_col()
+    maxCol = data_range.get_max_column()
     for j in range(0, maxCol):
-        print(j, data_range.get_values()[mr][j])
+        cellValue = values[monthRow][j]
+        if re.match(month, cellValue): return j
+    return None
 
-# Find a column for the specified month
+    

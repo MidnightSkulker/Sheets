@@ -7,7 +7,10 @@ from src.Students import *
 # Load the sheet for Grace's class from Google Sheets.
 sheet = loadGrace()
 # Print out the students from the sheet.
-studentNames = getStudentNames(sheet)
+studentNames = getStudentSheetInfo(sheet, 'Oct')
+
+monthCol = getMonthCol(sheet, 'Oct')
+print('October Column is', monthCol)
 
 # ---- Student Information from Address Book
 # Read in the .json file with the student information, and convert it to a dictionary.
