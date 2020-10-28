@@ -1,4 +1,6 @@
+#!/usr/bin//python3
 from sheetfu import SpreadsheetApp
+from src.Sheets import *
 
 def loadGrace ():
     sa = SpreadsheetApp('service_account.json')
@@ -9,11 +11,12 @@ def loadGrace ():
 
 sheet = loadGrace()
 
-data_range = sheet.get_data_range()           # returns the sheet range that contains data values.
+printStudents(sheet)
+# data_range = sheet.get_data_range()           # returns the sheet range that contains data values.
 # this is how you get things
-values = data_range.get_values()              # returns a 2D matrix of values.
-backgrounds = data_range.get_backgrounds()    # returns a 2D matrix of background colors in hex for
-colors = data_range.get_font_colors()
+# values = data_range.get_values()              # returns a 2D matrix of values.
+# backgrounds = data_range.get_backgrounds()    # returns a 2D matrix of background colors in hex for
+# colors = data_range.get_font_colors()
 
 
 
