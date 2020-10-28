@@ -1,17 +1,27 @@
 #!/usr/bin//python3
 from sheetfu import SpreadsheetApp
 from src.Sheets import *
+from src.Students import *
 
-def loadGrace ():
-    sa = SpreadsheetApp('service_account.json')
-    spreadsheet = sa.open_by_id('1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc')
-    sheet = spreadsheet.get_sheet_by_name('GracesClass')
-
-    return sheet
-
+# ---- Google Sheets
+# Load the sheet for Grace's class from Google Sheets.
 sheet = loadGrace()
+# Print out the students from the sheet.
+studentNames = getStudentNames(sheet)
+print(studentNames)
+print('\n')
 
-printStudents(sheet)
+# ---- Student Information from Address Book
+# Read in the .json file with the student information, and convert it to a dictionary.
+studentData = getStudents('outputs/students.json')
+# Do a test lookup for Aadhya Chiranji
+aadhya = findStudent(studentData, 'Aadhya C')
+print('Aadhya: ', aadhya)
+print('\n')
+# Now get the email addresses
+namesAndEmails = getStudentsAndEmails(studentNames, studentData)
+print(namesAndEmails)
+
 # data_range = sheet.get_data_range()           # returns the sheet range that contains data values.
 # this is how you get things
 # values = data_range.get_values()              # returns a 2D matrix of values.

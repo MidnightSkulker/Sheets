@@ -9,6 +9,29 @@ colorsToIgnore = [red, blue, green, purple]
 namesToIgnore = ['Totals', 'Remaining', 'Check Sum', 'Paid', 'Debt']
 monthRow = 2
 
+# Load the spreadsheet for Grace's classes from Google Sheets
+def loadGrace ():
+    sa = SpreadsheetApp('service_account.json')
+    spreadsheet = sa.open_by_id('1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc')
+    sheet = spreadsheet.get_sheet_by_name('GracesClass')
+    return sheet
+
+def getStudentNames(sheet: object) -> list:
+    data_range = sheet.get_data_range()
+    values = data_range.get_values()
+    colors = data_range.get_font_colors()
+    maxRow = data_range.get_max_row()
+    names = []
+    for j in range(0,maxRow):
+        potentialStudent = values[j][0]
+        if str(potentialStudent).isnumeric(): continue
+        if potentialStudent is None or potentialStudent == '': continue
+        if potentialStudent in namesToIgnore: continue
+        color = colors[j][0]
+        if color in colorsToIgnore: continue
+        names.append((j, potentialStudent))
+    return names
+        
 # Read the first column, and get all the student names and their row numbers.
 def printStudents(sheet: object):
     data_range = sheet.get_data_range()
