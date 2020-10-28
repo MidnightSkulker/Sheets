@@ -31,7 +31,7 @@ def getStudentNames(sheet: object) -> list:
         color = colors[j][0]
         if color in colorsToIgnore: continue
         if (status == 'Break') or (status == 'Gone'): continue
-        names.append((j, potentialStudent))
+        names.append({'row': j, 'name': potentialStudent})
     return names
         
 # Read the first column, and get all the student names and their row numbers.
@@ -47,9 +47,8 @@ def printStudents(sheet: object):
         if potentialStudent in namesToIgnore: continue
         color = colors[j][0]
         if color in colorsToIgnore: continue
-        print((j, potentialStudent))
+        print({'row': j, 'name': potentialStudent})
     
-
 # Read specified 2 columns from a specified range of columns.
 def get2Columns(sheet: object, rge: list) -> list:
     # Call the Sheets API

@@ -8,23 +8,13 @@ from src.Students import *
 sheet = loadGrace()
 # Print out the students from the sheet.
 studentNames = getStudentNames(sheet)
-print(studentNames)
-print('\n')
 
 # ---- Student Information from Address Book
 # Read in the .json file with the student information, and convert it to a dictionary.
 studentData = getStudents('outputs/students.json')
 # Now get the email addresses
 namesAndEmails = getStudentsAndEmails(studentNames, studentData)
-print(namesAndEmails)
-
-# data_range = sheet.get_data_range()           # returns the sheet range that contains data values.
-# this is how you get things
-# values = data_range.get_values()              # returns a 2D matrix of values.
-# backgrounds = data_range.get_backgrounds()    # returns a 2D matrix of background colors in hex for
-# colors = data_range.get_font_colors()
-
-
+# print(namesAndEmails)
 
 # this is how you set things
 # data_range.set_background('#000000')          # set every cell backgrounds to black
