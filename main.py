@@ -14,10 +14,6 @@ print('\n')
 # ---- Student Information from Address Book
 # Read in the .json file with the student information, and convert it to a dictionary.
 studentData = getStudents('outputs/students.json')
-# Do a test lookup for Aadhya Chiranji
-aadhya = findStudent(studentData, 'Aadhya C')
-print('Aadhya: ', aadhya)
-print('\n')
 # Now get the email addresses
 namesAndEmails = getStudentsAndEmails(studentNames, studentData)
 print(namesAndEmails)

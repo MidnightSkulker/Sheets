@@ -23,12 +23,14 @@ def getStudentNames(sheet: object) -> list:
     maxRow = data_range.get_max_row()
     names = []
     for j in range(0,maxRow):
-        potentialStudent = values[j][0]
+        potentialStudent = values[j][0] # Student Name
+        status = values[j][1] # Gone or Break
         if str(potentialStudent).isnumeric(): continue
         if potentialStudent is None or potentialStudent == '': continue
         if potentialStudent in namesToIgnore: continue
         color = colors[j][0]
         if color in colorsToIgnore: continue
+        if (status == 'Break') or (status == 'Gone'): continue
         names.append((j, potentialStudent))
     return names
         

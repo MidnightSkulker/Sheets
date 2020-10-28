@@ -30,7 +30,6 @@ def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
     ret = []
     for child in studentNames:
         name = child[1]
-        print('name', name)
         student = findStudent(studentData, name)
         if student:
             print('student', name, student['FN'])
@@ -41,6 +40,6 @@ def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
             else:
                 ret.append((child[1], child[0], 'NO EMAIL'))
         else:
-            print('student', None)
+            print('student', name, None)
             continue
     return ret
