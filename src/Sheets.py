@@ -11,6 +11,22 @@ colorsToIgnore = [red, blue, green, purple]
 namesToIgnore = ['Totals', 'Remaining', 'Check Sum', 'Paid', 'Debt']
 monthRow = 2
 
+# Determine the payment status
+def paymentStatus(amount: str, color: str) -> str:
+    status = 'Unknown'
+    print(amount, color)
+    if amount == None or amount == '':
+        status = 'Paid'
+    elif color == black: # Black
+        status = 'Due'
+    elif color == blue:
+        status = 'Paid'
+    elif color == purple:
+        status = 'Debt Payback'
+    elif color == green:
+        status = 'Cash'
+    return {'amount': amount, 'status': status}
+
 # Find a column for the specified month
 def getMonthCol(sheet: object, month: str) -> int:
     data_range = sheet.get_data_range()
@@ -39,7 +55,7 @@ def getStudentSheetInfo(sheet: object, month: int) -> list:
     names = []
     for j in range(0,maxRow):
         potentialStudent = values[j][0] # Student Name
-        status = values[j][1] # Gone or Break
+        attendanceStatus = values[j][1] # Gone or Break
         charge = values[j][monthCol]
         chargeColor = colors[j][monthCol]
         if not chargeColor: chargeColor = black
@@ -48,8 +64,12 @@ def getStudentSheetInfo(sheet: object, month: int) -> list:
         if potentialStudent in namesToIgnore: continue
         color = colors[j][0]
         if color in colorsToIgnore: continue
-        if (status == 'Break') or (status == 'Gone'): continue
-        names.append({'row': j, 'name': potentialStudent, 'charge': charge, 'color': chargeColor})
+        if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone'): continue
+        if not chargeColor: chargeColor = black
+        studentInfo = {'row': j, 'name': potentialStudent, 'charge': charge, 'color': chargeColor}
+        chargeStatus = paymentStatus(charge, chargeColor)
+        studentInfo.update(chargeStatus)
+        names.append(studentInfo)
     return names
         
 # Read the first column, and get all the student names and their row numbers.
