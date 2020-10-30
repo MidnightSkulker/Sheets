@@ -27,8 +27,7 @@ def paymentStatus(amount: str, color: str) -> str:
     return status
 
 # Find a column for the specified month
-def getMonthCol(sheet: object, month: str) -> int:
-    data_range = sheet.get_data_range()
+def getMonthCol(data_range: object, month: str) -> int:
     values = data_range.get_values()
     maxCol = data_range.get_max_column()
     for j in range(0, maxCol):
@@ -41,15 +40,15 @@ def loadGrace ():
     sa = SpreadsheetApp('service_account.json')
     spreadsheet = sa.open_by_id('1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc')
     sheet = spreadsheet.get_sheet_by_name('GracesClass')
-    return sheet
-
-def getStudentSheetInfo(sheet: object, month: int) -> list:
     data_range = sheet.get_data_range()
+    return data_range
+
+def getStudentSheetInfo(data_range: object, month: int) -> list:
     values = data_range.get_values()
     colors = data_range.get_font_colors()
     maxRow = data_range.get_max_row()
     # Determine which column is for the month requested.
-    monthCol = getMonthCol(sheet, month)
+    monthCol = getMonthCol(data_range, month)
     if monthCol == None: return None
     names = []
     for j in range(0,maxRow):
@@ -76,8 +75,7 @@ def getStudentSheetInfo(sheet: object, month: int) -> list:
     return names
         
 # Read the first column, and get all the student names and their row numbers.
-def printStudents(sheet: object):
-    data_range = sheet.get_data_range()
+def printStudents(data_range: object):
     values = data_range.get_values()
     colors = data_range.get_font_colors()
     maxRow = data_range.get_max_row()
@@ -100,8 +98,7 @@ def get2Columns(sheet: object, rge: list) -> list:
     return values
 
 # Find a column for the specified month
-def getMonthCol(sheet: object, month: str) -> int:
-    data_range = sheet.get_data_range()
+def getMonthCol(data_range: object, month: str) -> int:
     values = data_range.get_values()
     maxCol = data_range.get_max_column()
     for j in range(0, maxCol):
