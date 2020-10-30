@@ -1,6 +1,7 @@
 # Functions to manipulate Google Sheets
 from sheetfu import *
 import re
+from webcolors import *
 
 red = '#ff0000'
 blue = '#0000ff'
@@ -68,7 +69,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         studentInfo = {'row': j
                       , 'name': potentialStudent
                       , 'charge': charge
-                      , 'color': chargeColor
+                      , 'color': hex_to_name(chargeColor)
                       , 'status': chargeStatus
         }
         names.append(studentInfo)
