@@ -14,9 +14,8 @@ monthRow = 2
 # Determine the payment status
 def paymentStatus(amount: str, color: str) -> str:
     status = 'Unknown'
-    print(amount, color)
     if amount == None or amount == '':
-        status = 'Paid'
+        status = 'No Charge'
     elif color == black: # Black
         status = 'Due'
     elif color == blue:
@@ -25,7 +24,7 @@ def paymentStatus(amount: str, color: str) -> str:
         status = 'Debt Payback'
     elif color == green:
         status = 'Cash'
-    return {'amount': amount, 'status': status}
+    return status
 
 # Find a column for the specified month
 def getMonthCol(sheet: object, month: str) -> int:
@@ -66,9 +65,13 @@ def getStudentSheetInfo(sheet: object, month: int) -> list:
         if color in colorsToIgnore: continue
         if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone'): continue
         if not chargeColor: chargeColor = black
-        studentInfo = {'row': j, 'name': potentialStudent, 'charge': charge, 'color': chargeColor}
         chargeStatus = paymentStatus(charge, chargeColor)
-        studentInfo.update(chargeStatus)
+        studentInfo = {'row': j
+                      , 'name': potentialStudent
+                      , 'charge': charge
+                      , 'color': chargeColor
+                      , 'status': chargeStatus
+        }
         names.append(studentInfo)
     return names
         
