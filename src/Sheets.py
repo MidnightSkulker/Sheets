@@ -69,8 +69,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         studentInfo = { 'name': potentialStudent
                       , 'charge': charge
                       , 'color': hex_to_name(chargeColor)
-                      , 'status': chargeStatus
-        }
+                      , 'status': chargeStatus }
         names.append(studentInfo)
     return names
         
