@@ -66,8 +66,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone'): continue
         if not chargeColor: chargeColor = black
         chargeStatus = paymentStatus(charge, chargeColor)
-        studentInfo = {'row': j
-                      , 'name': potentialStudent
+        studentInfo = { 'name': potentialStudent
                       , 'charge': charge
                       , 'color': hex_to_name(chargeColor)
                       , 'status': chargeStatus
