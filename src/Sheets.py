@@ -57,18 +57,25 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         attendanceStatus = values[j][1] # Gone or Break
         charge = values[j][monthCol]
         chargeColor = colors[j][monthCol]
-        if not chargeColor: chargeColor = black
         if str(potentialStudent).isnumeric(): continue
         if potentialStudent is None or potentialStudent == '': continue
         if potentialStudent in namesToIgnore: continue
         color = colors[j][0]
         if color in colorsToIgnore: continue
         if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone'): continue
-        if not chargeColor: chargeColor = black
+        if not chargeColor: chargeColor = '#000000' # black
+        try:
+            chargeColor = hex_to_name(chargeColor)
+        except:
+            if chargeColor == '#9900ff': chargeColor = 'purple'
+            else:
+                print('ERROR: Charge Color ', chargeColor)
+                chargeColor = 'purple'
+
         chargeStatus = paymentStatus(charge, chargeColor)
         studentInfo = { 'name': potentialStudent
                       , 'charge': charge
-                      , 'color': hex_to_name(chargeColor)
+                      , 'color': chargeColor
                       , 'status': chargeStatus }
         names.append(studentInfo)
     return names

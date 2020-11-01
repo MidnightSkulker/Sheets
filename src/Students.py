@@ -1,6 +1,10 @@
 import json
 import re
 
+# Print a student record
+def outStudent(record:dict) -> str:
+    return (record['name'] + ' is due for a payment of $' + record['charge'] + '\n' + 'This invoice is sent to ' + record['email'])
+    
 # Get the student data from a file that is in JSON format
 def getStudents(jsonFileName:str) -> dict:
     jsonFile = open(jsonFileName)
