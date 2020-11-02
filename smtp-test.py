@@ -14,7 +14,7 @@ pw = getEmailPassword()
 print('pw:', pw)
 
 student = {'name': 'Tejas', 'charge': '90', 'color': 'black', 'status': 'Due', 'email': 's.roopaa@gmail.com'}
-message = mkEmail(pw, 'October', student)
+message = mkEmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', 'October', student)
 studentstr = str(student)
 studentstr2 = student['name'] + ' - ' + student['email'] + ' - ' + student['status']  + ' - $' + student['charge']
 print('studentstr', studentstr)
@@ -23,7 +23,7 @@ server = getSMTP_SSL(pw)
 
 server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', outStudent(student))
 server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
-server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', 'High Their!')
+# sendEmailToStudent(server, 'AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', student, 'October')
 
 server.close()
 

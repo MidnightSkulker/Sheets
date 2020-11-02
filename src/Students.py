@@ -29,6 +29,11 @@ def printStudentsAndEmails(studentData: list):
         else:
             print(fullName + ': has no EMAIL')
 
+# Print out the list of student records.
+def printStudentRecords(students: list):
+    for s in students:
+        print(str(s))
+
 # Print out the list of students and their E-mail addresses.
 def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
     ret = []
@@ -44,7 +49,7 @@ def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
             else:
                 child['email'] = 'NO EMAIL'
                 ret.append(child)
-            print(child)
+            # print(child)
         else:
             print('student', name, None)
             continue
