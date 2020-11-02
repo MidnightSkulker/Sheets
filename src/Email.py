@@ -45,8 +45,11 @@ def sendEmailsToStudents(fromEmail: str, toEmail: str, students: list, month: st
     print('pw:', pw)
     server = getSMTP_SSL(pw)
     for student in students:
-        message = mkEmail(fromEmail, toEmail, month, student)
-        server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
+        if student['status'] == 'Due':
+            message = mkEmail(fromEmail, toEmail, month, student)
+            server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
+        else:
+            continue
     server.close()
     
 def sendOneEmail(server: object, record:dict):

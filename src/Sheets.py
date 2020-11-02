@@ -64,6 +64,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         if color in colorsToIgnore: continue
         if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone'): continue
         if not chargeColor: chargeColor = '#000000' # black
+        chargeStatus = paymentStatus(charge, chargeColor)
         try:
             chargeColor = hex_to_name(chargeColor)
         except:
@@ -72,7 +73,6 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
                 print('ERROR: Charge Color ', chargeColor)
                 chargeColor = 'purple'
 
-        chargeStatus = paymentStatus(charge, chargeColor)
         studentInfo = { 'name': potentialStudent
                       , 'charge': charge
                       , 'color': chargeColor
