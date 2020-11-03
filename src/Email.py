@@ -27,7 +27,7 @@ def mkEmail(fromEmail: str, toEmail: str, month: str, student: dict) -> object:
     message = MIMEMultipart("alternative")
     message['Subject'] = month + ' tuition statement for ' + student['name']
     message['From'] = 'AngelsAcademyOnline@gmail.com'
-    message['To'] = 'gracetwhite' + '+' + student['name'] + '@gmail.com'
+    message['To'] = student['email'] + ', ' + 'gracetwhite@gmail.com'
     text = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n' + 'You can pay using zelle pay with email id gracetwhite@gmail.com'
     part1 = MIMEText(text, 'plain')
     message.attach(part1)
@@ -47,7 +47,8 @@ def sendEmailsToStudents(fromEmail: str, toEmail: str, students: list, month: st
     for student in students:
         if student['status'] == 'Due':
             message = mkEmail(fromEmail, toEmail, month, student)
-            server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
+            print(student['email'])
+            server.sendmail('AngelsdAcademyOnline@gmail.com', student['email'], message.as_string())
         else:
             continue
     server.close()
