@@ -49,8 +49,7 @@ def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
             else:
                 child['email'] = 'NO EMAIL'
                 ret.append(child)
-            # print(child)
         else:
-            print('student', name, None)
+            print('student not found, try processing Address Book (rall)', name)
             continue
     return ret

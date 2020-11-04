@@ -1,3 +1,4 @@
+import sys
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -23,32 +24,60 @@ def getEmailPassword() -> str:
         data = pwfile.readline().strip()
     return data
 
-def mkEmail(fromEmail: str, toEmail: str, month: str, student: dict) -> object:
+# Construct the email with the amount due.
+def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict) -> object:
     message = MIMEMultipart("alternative")
     message['Subject'] = month + ' tuition statement for ' + student['name']
     message['From'] = 'AngelsAcademyOnline@gmail.com'
-    message['To'] = student['email'] + ', ' + 'gracetwhite@gmail.com'
+    message['To'] = targetEmail
     text = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n' + 'You can pay using zelle pay with email id gracetwhite@gmail.com'
     part1 = MIMEText(text, 'plain')
     message.attach(part1)
     return message
 
-# Send a single Email with invoice.
-def sendEmailToStudent(server: object, fromEmail: str, toEmail: str, student: dict, month: str):
-    message = mkEmail(fromEmail, toEmail, month, student)
-    server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
+# Add the student name after a '+' to the username portion of the email address.
+# For example: gracetwhite@gmail.com ---> gracetwhite+arnav@gmail.com
+def addStudentNameToEmail(toEmail: str, name: str) -> str:
+    emailParts = toEmail.split('@')
+    if len(emailParts) == 2:
+        return emailParts[0] + '+Student_' + name.replace(' ','') + '@' + emailParts[1]
+    else:
+        return toEmail
+    
+# Based on the mode, create the target Email address.
+def mkTargetEmail(mode: str, toEmail: str, studentEmail: str, name: str) -> str:
+    augmentedToEmail = addStudentNameToEmail(toEmail, name)
+    if mode == 'Preview':
+        return augmentedToEmail
+    elif mode == 'Live':
+        return studentEmail + ',' + augmentedToEmail
+    else:
+        print('Invalid mode:', mode)
+        sys.exit(2)
 
-# Send invoices to all the students.
-def sendEmailsToStudents(fromEmail: str, toEmail: str, students: list, month: str):
+# Send a single Email with invoice.
+def sendEmailToStudent(mode: str, fromEmail: str, toEmail: str, student: dict, month: str):
     port = 465  # For SSL
     pw = getEmailPassword()
-    print('pw:', pw)
+    targetEmail = mkTargetEmail(mode, toEmail, student['email'], student['name'].strip())
+    print('targetEmail = ', targetEmail, toEmail, student['email'])
+    message = mkEmail(fromEmail, targetEmail, month, student)
+    server = getSMTP_SSL(pw)
+    server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
+    server.close
+
+# Send invoices to all the students.
+def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list, month: str):
+    port = 465  # For SSL
+    pw = getEmailPassword()
     server = getSMTP_SSL(pw)
     for student in students:
         if student['status'] == 'Due':
-            message = mkEmail(fromEmail, toEmail, month, student)
-            print(student['email'])
-            server.sendmail('AngelsdAcademyOnline@gmail.com', student['email'], message.as_string())
+            targetEmail = mkTargetEmail(mode, 'gracetwhite@gmail.com', student['email'], student['name'])
+            print('targetEmail = ', targetEmail)
+            message = mkEmail(fromEmail, targetEmail, month, student)
+            print('message = ', message)
+            # server.sendmail('AngelsdAcademyOnline@gmail.com', targetEmail, message.as_string())
         else:
             continue
     server.close()
