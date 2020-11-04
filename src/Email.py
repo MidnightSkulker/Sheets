@@ -19,6 +19,7 @@ def getSMTP_SSL(password: str) -> object:
     print('Logged in!')
     return server
 
+# Fetch the Email password from a file (which is not part of the repository).
 def getEmailPassword() -> str:
     with open ("pw", "r") as pwfile:
         data = pwfile.readline().strip()
@@ -55,17 +56,6 @@ def mkTargetEmail(mode: str, toEmail: str, studentEmail: str, name: str) -> str:
         print('Invalid mode:', mode)
         sys.exit(2)
 
-# Send a single Email with invoice.
-def sendEmailToStudent(mode: str, fromEmail: str, toEmail: str, student: dict, month: str):
-    port = 465  # For SSL
-    pw = getEmailPassword()
-    targetEmail = mkTargetEmail(mode, toEmail, student['email'], student['name'].strip())
-    print('targetEmail = ', targetEmail, toEmail, student['email'])
-    message = mkEmail(fromEmail, targetEmail, month, student)
-    server = getSMTP_SSL(pw)
-    server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', message.as_string())
-    server.close
-
 # Send invoices to all the students.
 def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list, month: str):
     port = 465  # For SSL
@@ -81,6 +71,3 @@ def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list
         else:
             continue
     server.close()
-    
-def sendOneEmail(server: object, record:dict):
-    server.sendmail('AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', str(record))
