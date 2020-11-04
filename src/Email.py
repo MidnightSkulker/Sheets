@@ -9,7 +9,7 @@ from src.Email import *
 #
 # We send a message to each student with a statue of 'Due', and a non-zero charge.
 
-# Create a secure SSL context
+# Create a secure SSL context for sending Email.
 def getSMTP_SSL(password: str) -> object:
     port = 465  # For SSL
     context = ssl.create_default_context()
@@ -25,6 +25,7 @@ def getEmailPassword() -> str:
     return data
 
 # Construct the email with the amount due.
+# ToDo: Change this the HTML format.
 def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict) -> object:
     message = MIMEMultipart("alternative")
     message['Subject'] = month + ' tuition statement for ' + student['name']
@@ -45,6 +46,8 @@ def addStudentNameToEmail(toEmail: str, name: str) -> str:
         return toEmail
     
 # Based on the mode, create the target Email address.
+# The toEmail will the augmented with the student name, so when we receive
+# our copy of the email, we can tell that it was sent to the right place.
 def mkTargetEmail(mode: str, toEmail: str, studentEmail: str, name: str) -> str:
     augmentedToEmail = addStudentNameToEmail(toEmail, name)
     if mode == 'Preview':
