@@ -33,18 +33,18 @@ def printStudentRecords(students: list):
 # Print out the list of students and their E-mail addresses.
 def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
     ret = []
-    for student in studentNames:
-        name = student['name']
+    for child in studentNames:
+        name = child['name']
         student = findStudent(studentData, name)
         if student:
             fullName = student['FN']
             if 'EMAIL1' in student:
                 email = student['EMAIL1']
-                student['email'] = email
-                ret.append(student)
+                child['email'] = email
+                ret.append(child)
             else:
-                student['email'] = 'NO EMAIL'
-                ret.append(student)
+                child['email'] = 'NO EMAIL'
+                ret.append(child)
         else:
             print('student not found, try processing Address Book (rall)', name)
             continue
