@@ -1,11 +1,10 @@
-# Methods relating to credentials.
-
 import os.path
 import pickle
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-def openSheet(sheetId: str, scopes:list):
+# Open a Google Sheet using its Id (A long squirly string that is part of the URL).
+def openSheet(sheetId: str, scopes: list):
     creds = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
