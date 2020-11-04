@@ -42,6 +42,7 @@ else:
     print('Could not open', parsedArguments,sheetID, parsedArguments.sheetName)
     sys.exit(1)
 
+print('---> len(students)', len(students))
 student = students[0]
 print('---> student', student)
 target = mkTargetEmail(parsedArguments.Mode, 'gracetwhite@gmail.com', student['email'], student['name'])
