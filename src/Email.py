@@ -77,7 +77,7 @@ def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list
             print('targetEmail = ', targetEmail)
             message = mkEmail(fromEmail, targetEmail, month, student)
             print('message = ', message)
-            # server.sendmail('AngelsdAcademyOnline@gmail.com', targetEmail, message.as_string())
+            server.sendmail('AngelsdAcademyOnline@gmail.com', targetEmail, message.as_string())
         else:
             continue
     server.close()
