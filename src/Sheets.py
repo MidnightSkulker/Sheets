@@ -97,37 +97,3 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
                       , 'status': chargeStatus }
         names.append(studentInfo) # Add to the list of students.
     return names
-        
-# Read the first column, and get all the student names and their row numbers.
-def printStudents(data_range: object):
-    values = data_range.get_values()
-    colors = data_range.get_font_colors()
-    maxRow = data_range.get_max_row()
-    for j in range(0,maxRow):
-        potentialStudent = values[j][0]
-        if str(potentialStudent).isnumeric(): continue
-        if potentialStudent is None or potentialStudent == '': continue
-        if potentialStudent in namesToIgnore: continue
-        color = colors[j][0]
-        if color in colorsToIgnore: continue
-        print({'row': j, 'name': potentialStudent})
-    
-# Read specified 2 columns from a specified range of columns.
-def get2Columns(sheet: object, rge: list) -> list:
-    # Call the Sheets API
-    sheet = service.spreadsheets()
-    # Get the range of columns
-    result = sheet.values().get(spreadsheetId=sheetId, range = rge).execute()
-    values = result.get('values', [])
-    return values
-
-# Find a column for the specified month
-def getMonthCol(data_range: object, month: str) -> int:
-    values = data_range.get_values()
-    maxCol = data_range.get_max_column()
-    for j in range(0, maxCol):
-        cellValue = values[monthRow][j]
-        if re.match(month, cellValue): return j
-    return None
-
-    
