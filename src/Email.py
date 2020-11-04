@@ -9,10 +9,9 @@ from src.Email import *
 #
 # We send a message to each student with a statue of 'Due', and a non-zero charge.
 
-port = 465  # For SSL
-
 # Create a secure SSL context
 def getSMTP_SSL(password: str) -> object:
+    port = 465  # For SSL
     context = ssl.create_default_context()
     server = smtplib.SMTP_SSL('smtp.gmail.com', port, context=context)
     server.login('AngelsAcademyOnline@gmail.com', password)
@@ -58,7 +57,6 @@ def mkTargetEmail(mode: str, toEmail: str, studentEmail: str, name: str) -> str:
 
 # Send invoices to all the students.
 def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list, month: str):
-    port = 465  # For SSL
     pw = getEmailPassword()
     server = getSMTP_SSL(pw)
     for student in students:
