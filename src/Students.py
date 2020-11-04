@@ -1,7 +1,7 @@
 import json
 import re
 
-# Print a student record
+# Prepare a student record for printing.
 def outStudent(record:dict) -> str:
     return (record['name'] + ' is due for a payment of $' + record['charge'] + '\n' + 'This invoice is sent to ' + record['email'])
     

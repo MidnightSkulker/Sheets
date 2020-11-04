@@ -6,7 +6,7 @@ from src.Email import *
 
 # ---- Google Sheets
 # Load the sheet for Grace's class from Google Sheets.
-data_range = loadGrace()
+data_range = loadSheet('Graces-Class-Charges')
 # Print out the students from the sheet.
 studentRecords = getStudentSheetInfo(data_range, 'Oct')
 

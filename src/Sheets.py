@@ -37,12 +37,20 @@ def getMonthCol(data_range: object, month: str) -> int:
     return None
 
 # Load the spreadsheet for Grace's classes from Google Sheets
-def loadGrace ():
+def loadSheet (sheetId: str, sheetName: str) -> object:
     sa = SpreadsheetApp('service_account.json')
-    spreadsheet = sa.open_by_id('1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc')
-    sheet = spreadsheet.get_sheet_by_name('GracesClass')
-    data_range = sheet.get_data_range()
-    return data_range
+    try:
+        spreadsheet = sa.open_by_id('1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc')
+        try:
+            sheet = spreadsheet.get_sheet_by_name(sheetName)
+            data_range = sheet.get_data_range()
+            return data_range
+        except:
+            print('Could not find sheet:', sheetName)
+            return None
+    except:
+        print('Could not open sheet with Id:', sheetId)
+        return None
 
 def getStudentSheetInfo(data_range: object, month: int) -> list:
     values = data_range.get_values()
@@ -69,6 +77,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
             chargeColor = hex_to_name(chargeColor)
         except:
             if chargeColor == '#9900ff': chargeColor = 'purple'
+            elif chargeColor == '#37761c': chargeColor = 'green'
             else:
                 print('ERROR: Charge Color ', chargeColor)
                 chargeColor = 'purple'
