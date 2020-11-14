@@ -1,3 +1,3 @@
 # Sheets
-# token.pickle is for storing refresh tokens. It is part of the OAuth implementation
+# Read Google Sheets with charges, and send invoice emails.
 
