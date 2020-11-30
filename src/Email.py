@@ -60,12 +60,10 @@ def mkTargetEmail(mode: str, toEmail: str, studentEmail: str, name: str) -> str:
 
 # Send invoices to all the students.
 def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list, month: str):
-    print('----> Sending Emails to students, mode = ', mode)
     pw = getEmailPassword()
     server = getSMTP_SSL(pw)
     for student in students:
         if student['status'] == 'Due':
-            print('----> student', student['name'])
             targetEmail = mkTargetEmail(mode, 'gracetwhite@gmail.com', student['email'], student['name'])
             print('targetEmail = ', targetEmail)
             message = mkEmail(fromEmail, targetEmail, month, student)
