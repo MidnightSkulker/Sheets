@@ -10,7 +10,9 @@ purple = '#9900ff' # Paid off with debt from March
 black = '#000000'  # Due
 colorsToIgnore = [red, blue, green, purple] # Colors ignore in the student names column.
 namesToIgnore = ['Totals', 'Remaining', 'Check Sum', 'Paid', 'Debt'] # Names to ignore in the student names Column.
-monthRow = 2       # Row containing the months (Sep, Oct, ...)
+# Row containing the months (Sep, Oct, ...)
+# This needs to be followed in each spreadSheet
+monthRow = 0 # I.e. the first row of the sheet
 
 # Determine the payment status, based on the color of the entry.
 def paymentStatus(amount: str, color: str) -> str:

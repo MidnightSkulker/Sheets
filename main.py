@@ -1,4 +1,4 @@
-#!/usr/bin//python3
+#!/usr/bin/python3
 import sys
 import argparse
 from sheetfu import SpreadsheetApp
@@ -22,7 +22,7 @@ parsedArguments = argumentParser.parse_args()
 # Debug
 print('---> parsed Arguments:', parsedArguments)
 print('---> Mode = ', parsedArguments.Mode)
-print('---> Mode = ', parsedArguments.Month)
+print('---> Month = ', parsedArguments.Month)
 print('---> SheetId = ', parsedArguments.SheetID)
 print('---> SheetName = ', parsedArguments.SheetName)
 if not parsedArguments.Mode in ['Live', 'Preview']:
