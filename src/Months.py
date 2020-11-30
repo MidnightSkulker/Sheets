@@ -7,3 +7,18 @@ def isMonth(s: str):
     for m in months3Letters:
         if re.match(m, s): return m
     return None
+
+months = { 'Jan': 'January',
+           'Feb': 'February',
+           'Mar': 'March',
+           'Apr': 'April',
+           'May': 'May',
+           'Jun': 'June',
+           'Jul': 'July',
+           'Aug': 'August',
+           'Sep': 'September',
+           'Oct': 'October',
+           'Nov': 'November',
+           'Dec': 'December'
+           }
+

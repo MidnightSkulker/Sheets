@@ -77,8 +77,8 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         color = colors[j][0]
         # Ignore the specified colors.
         if color in colorsToIgnore: continue
-        # Ignore students on break or gone.
-        if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone'): continue
+        # Ignore students on break or gone or 'X'
+        if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone') or (attendanceStatus == 'X'): continue
         # Compute the charge color from the rgb hex value for the cell with the charge.
         if not chargeColor: chargeColor = '#000000' # black
         chargeStatus = paymentStatus(charge, chargeColor)
