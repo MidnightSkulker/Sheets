@@ -42,8 +42,9 @@ def getMonthCol(data_range: object, month: str) -> int:
 def loadSheet (sheetId: str, sheetName: str) -> object:
     sa = SpreadsheetApp('service_account.json')
     try:
-        spreadsheet = sa.open_by_id('1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc')
+        spreadsheet = sa.open_by_id(sheetId)
         try:
+            sheets = spreadsheet.get_sheets()
             sheet = spreadsheet.get_sheet_by_name(sheetName)
             data_range = sheet.get_data_range()
             return data_range

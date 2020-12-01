@@ -64,6 +64,9 @@ def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list
     server = getSMTP_SSL(pw)
     for student in students:
         if student['status'] == 'Due':
+            if student['email'] == 'NO EMAIL':
+                print('----->>', student['name'], 'has no email ***')
+                continue
             targetEmail = mkTargetEmail(mode, 'gracetwhite@gmail.com', student['email'], student['name'])
             print('targetEmail = ', targetEmail)
             message = mkEmail(fromEmail, targetEmail, month, student)

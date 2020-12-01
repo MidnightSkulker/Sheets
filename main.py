@@ -21,10 +21,10 @@ parsedArguments = argumentParser.parse_args()
 
 # Debug
 print('---> parsed Arguments:', parsedArguments)
-print('---> Mode = ', parsedArguments.Mode)
-print('---> Month = ', parsedArguments.Month)
-print('---> SheetId = ', parsedArguments.SheetID)
-print('---> SheetName = ', parsedArguments.SheetName)
+print('---> Mode =', parsedArguments.Mode)
+print('---> Month =', parsedArguments.Month)
+print('---> SheetId =', parsedArguments.SheetID)
+print('---> SheetName =', parsedArguments.SheetName)
 if not parsedArguments.Mode in ['Live', 'Preview']:
     print('Invalid Mode:', parsedArguments.Mode)
     sys.exit(2)
@@ -45,7 +45,7 @@ if data_range:
     students = getStudentsAndEmails(studentRecords, studentData)
     printStudentRecords(students)
 else:
-    print('Could not open', parsedArguments,sheetID, parsedArguments.sheetName)
+    print('Could not open', parsedArguments.SheetID, parsedArguments.SheetName)
     sys.exit(1)
 
 # print('---> len(students)', len(students))
