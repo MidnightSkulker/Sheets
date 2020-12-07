@@ -1,0 +1,2 @@
+#!/bin/bash
+python3 main.py --SheetID=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI --SheetName=Lakshmi --Mode=Live --Month=Nov
