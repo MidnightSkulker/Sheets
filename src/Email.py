@@ -31,7 +31,7 @@ def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict) -> obje
     message['Subject'] = month + ' tuition statement for ' + student['name']
     message['From'] = 'AngelsAcademyOnline@gmail.com'
     message['To'] = targetEmail
-    text = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n' + 'You can pay using zelle pay with email id gracetwhite@gmail.com'
+    text = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n' + 'You can pay using zelle pay with email id gracetwhite@gmail.com\n'  + 'Please include your child\'s name in the description part of the payment\n'
     part1 = MIMEText(text, 'plain')
     message.attach(part1)
     return message
