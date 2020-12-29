@@ -91,7 +91,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
             if chargeColor == '#9900ff': chargeColor = 'purple'
             elif chargeColor == '#37761c': chargeColor = 'green'
             else:
-                print('ERROR: Charge Color ', chargeColor)
+                print('ERROR: Charge Color for ', potentialStudent, ', amount', charge, ', color: ', chargeColor)
                 chargeColor = 'purple'
         # Smash the relevant information together into a dict.
         studentInfo = { 'name': potentialStudent
