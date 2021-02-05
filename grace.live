@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=Live --Month=Dec
+python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=Live --Month=Jan

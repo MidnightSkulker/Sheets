@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 main.py --SheetID=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8 --SheetName=MythilisClass --Mode=Preview --Month=Dec
+python3 main.py --SheetID=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8 --SheetName=MythilisClass --Mode=Preview --Month=Jan
