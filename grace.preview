@@ -1,2 +1,8 @@
 #!/bin/bash
-python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=Preview --Month=Jan
+if [[ $# -ne 1 ]]
+then
+	echo "Must have 1 argument: Month abbreviation"
+else
+	echo "Processing for month ${1}"
+	python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=Preview --Month=Jan
+fi
