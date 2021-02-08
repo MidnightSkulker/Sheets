@@ -1,2 +1,11 @@
-#!/bin/bash
-python3 main.py --SheetID=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI --SheetName=Lakshmi --Mode=Live --Month=Jan
+#!/usr/local/bin/bash
+# Need bash 4 or greater.
+# Argument 1 is month abbreviation, e.g. Jan, Feb.
+
+if [[ $# -ne 1 ]]
+then
+	echo "Must have 1 argument: Month abbreviation"
+else
+	echo "Processing for month ${1}"
+  python3 main.py --SheetID=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI --SheetName=Lakshmi --Mode=Live --Month=$1
+fi

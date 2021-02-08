@@ -46,6 +46,7 @@ def getStudentsAndEmails(studentNames: list, studentData: list) -> list:
                 child['email'] = 'NO EMAIL'
                 ret.append(child)
         else:
-            print('student not found, try processing Address Book (rall)', name)
+            print('Student not found, try processing Address Book (rall)', name)
+            print('Check if Company / Organization field is \"Online Student\"')
             continue
     return ret
