@@ -1,17 +1,29 @@
 #!/usr/local/bin/bash
+# Need bash 4 or greater.
+# Argument 1 is month abbreviation, e.g. Jan, Feb.
+# Argument 2 is mode, which must be 'Preview' or 'Live'.
+
 # Arrays of sheetID and sheet names, indexed by teachers name
 echo "Hello from script test"
 declare -A sheetID
 declare -A sheetName
 sheetID[Grace]=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc
 sheetName[Grace]=GracesClass
-echo "sheetID test" ${sheetID[Grace]}
-echo "sheetName test" ${sheetName[Grace]}
+sheetID[Mythili]=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8
+sheetName[Mythili]=MythilisClass
+sheetID[Lakshmi]=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI
+sheetName[Lakshmi]=Lakshmi
 
-if [[ $# -ne 1 ]]
+echo "sheetID test1" ${sheetID[Grace]}
+echo "sheetName test2" ${sheetName[Grace]}
+echo "sheetID test3" ${sheetID[Mythili]}
+echo "sheetName test4" ${sheetName[Mythili]}
+
+if [[ $# -ne 2 ]]
 then
-	echo "Must have 1 argument: Month abbreviation"
+	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
+	echo "and arg2 is mode (Preview or Live)"
 else
-	echo "Processing for month ${1}"
-	# python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=Preview --Month=Jan
+	echo "Processing for month ${1}, in mode ${2}"
+  #python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=$2 --Month=$1
 fi
