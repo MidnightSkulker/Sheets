@@ -1,0 +1,12 @@
+#!/usr/local/bin/bash
+# Argument 1 is the month 3 letter abbreviation, e.g. Jan, Feb, ...
+# Argument 2 is mode, which must be 'Preview' or 'Live'.
+
+if [[ $# -ne 2 ]]
+then
+	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
+	echo "and arg2 is mode (Preview or Live)"
+else
+	echo "Processing for month ${1}, in mode ${2}"
+  python3 main.py --SheetID=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8 --SheetName=MythilisClass --Mode=$2 --Month=$1
+fi
