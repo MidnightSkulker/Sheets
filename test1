@@ -1,12 +1,19 @@
 #!/usr/local/bin/bash
 # Need bash 4 or greater.
-# Argument 1 is month abbreviation, e.g. Jan, Feb.
+# Argument 1 is teacher, which must be 'Grace', 'Mythili', or 'Teacher'
 # Argument 2 is mode, which must be 'Preview' or 'Live'.
+# Argument 3 is month abbreviation, e.g. Jan, Feb.
+teacher=$1
+mode=$2
+month=$3
 
-# Arrays of sheetID and sheet names, indexed by teachers name
-echo "Hello from script test"
+# Arrays of sheetID and sheet names, indexed by teachers name.
 declare -A sheetID
 declare -A sheetName
+declare -A modes=([Preview]=1 [Live]=2)
+declare -A months=([Jan]=1 [Feb]=2 [Mar]=3 [Apr]=4 [May]=5 [Jun]=6 [Jul]=7 [Aug]=8 [Sep]=9 [Oct]=10 [Nov]=11 [Dec]=12)
+
+# Initialize sheet ids and sheet names within the Google sheets.
 sheetID[Grace]=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc
 sheetName[Grace]=GracesClass
 sheetID[Mythili]=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8
@@ -14,16 +21,30 @@ sheetName[Mythili]=MythilisClass
 sheetID[Lakshmi]=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI
 sheetName[Lakshmi]=Lakshmi
 
-echo "sheetID test1" ${sheetID[Grace]}
-echo "sheetName test2" ${sheetName[Grace]}
-echo "sheetID test3" ${sheetID[Mythili]}
-echo "sheetName test4" ${sheetName[Mythili]}
-
-if [[ $# -ne 2 ]]
+if [[ $# -ne 3 ]]
 then
-	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
-	echo "and arg2 is mode (Preview or Live)"
+	echo "Must have 3 arguments:"
+	echo "Arg1 is teacher (Grace, Mythili, or Lakshmi)"
+	echo "Arg2 is mode (Preview or Live)"
+	echo "Arg3 month abbreviation (e.g. Jan, Feb ...)"
+	exit 4
+fi
+
+# Validate the arguments
+if [[ -v "modes[$mode]"  && -v "months[$month]" ]]
+then
+	if [[ -v "sheetID[$teacher]" && "sheetName[$teacher]" ]]
+	then
+		sheetid=${sheetID[$teacher]}
+		sheetname=${sheetName[$teacher]}
+		echo "Processing for teacher ${1} in mode ${2} for month ${1},"
+		echo "using sheetid=$sheetid"
+		echo "and sheetname=$sheetname"
+	  python3 main.py --SheetID=$sheetid --SheetName=$sheetname --Mode=$mode --Month=$month
+	else
+		echo "sheetID and/or sheetName does not exist for $teacher"
+	fi
 else
-	echo "Processing for month ${1}, in mode ${2}"
-  #python3 main.py --SheetID=1fLDy8hmgYdxYvQPhbi6DFL0BqR8hvlvK2YaA7vgoEzc --SheetName=GracesClass --Mode=$2 --Month=$1
+	echo "Could not find either $mode or $month"
+  exit 2
 fi
