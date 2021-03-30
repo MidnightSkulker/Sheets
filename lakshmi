@@ -7,11 +7,14 @@
 declare -A sheetID
 declare -A sheetName
 
-if [[ $# -ne 2 ]]
-then
-	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
-	echo "and arg2 is mode (Preview or Live)"
-else
+if [[ $# -eq 2 ]]; then
 	echo "Processing for month ${1}, in mode ${2}"
-  python3 main.py --SheetID=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI --SheetName=Lakshmi --Mode=$2 --Month=$1
+	python3 main.py --SheetID=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI --SheetName=Lakshmi --Mode=$2 --Month=$1
+elif [[ $# -eq 3 ]]; then
+  echo "Processing for month ${1}, in mode ${2}, with flag $3"
+	python3 main.py --SheetID=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI --SheetName=Lakshmi --Mode=$2 --Month=$1 --Reminder
+else
+	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
+	echo "arg2 is mode (Preview or Live)"
+	echo "arg3 (optional) is the Reminder flag"
 fi

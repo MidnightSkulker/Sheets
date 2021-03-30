@@ -2,11 +2,14 @@
 # Argument 1 is the month 3 letter abbreviation, e.g. Jan, Feb, ...
 # Argument 2 is mode, which must be 'Preview' or 'Live'.
 
-if [[ $# -ne 2 ]]
-then
-	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
-	echo "and arg2 is mode (Preview or Live)"
-else
+if [[ $# -eq 2 ]]; then
 	echo "Processing for month ${1}, in mode ${2}"
-  python3 main.py --SheetID=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8 --SheetName=MythilisClass --Mode=$2 --Month=$1
+	python3 main.py --SheetID=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8 --SheetName=MythilisClass --Mode=$2 --Month=$1
+elif [[ $# -eq 3 ]]; then
+  echo "Processing for month ${1}, in mode ${2}, with flag $3"
+	python3 main.py --SheetID=1MolY8_4Ze-g8vxVhd9MLg0yCq8asqY-JAk4q673zlf8 --SheetName=MythilisClass --Mode=$2 --Month=$1 --Reminder
+else
+	echo "Must have 1 argument: Arg1 is month abbreviation (e.g. Jan, Feb ...)"
+	echo "arg2 is mode (Preview or Live)"
+	echo "arg3 (optional) is the Reminder flag"
 fi
