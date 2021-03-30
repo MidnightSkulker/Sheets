@@ -24,14 +24,23 @@ def getEmailPassword() -> str:
         data = pwfile.readline().strip()
     return data
 
+# Make a subject string based on the mode
+def mkSubject(reminder: bool, month: str, student: dict) -> str:
+    common = month + ' tuition statement for ' + student['name']
+    if reminder:
+        return 'Reminder: ' + common
+    else:
+        return common
+
 # Construct the email with the amount due.
 # ToDo: Change this the HTML format.
-def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict) -> object:
+def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict, reminder: bool) -> object:
     message = MIMEMultipart("alternative")
-    message['Subject'] = month + ' tuition statement for ' + student['name']
+    message['Subject'] = mkSubject(reminder, month, student)
     message['From'] = 'AngelsAcademyOnline@gmail.com'
     message['To'] = targetEmail
-    text = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n' + 'You can pay using zelle pay with email id gracetwhite@gmail.com\n'  + 'Please include your child\'s name in the description part of the payment\n' + 'Our EIN is 54-2192560\n'
+    remind = 'Reminder, ' if reminder else ''
+    text = remind + 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n' + 'You can pay using zelle pay with email id' + 'gracetwhite@gmail.com\n' + 'Please include your child\'s name in' + 'the description part of the payment\n' + 'Our EIN is 54-2192560\n'
     part1 = MIMEText(text, 'plain')
     message.attach(part1)
     return message
@@ -44,7 +53,7 @@ def addStudentNameToEmail(toEmail: str, name: str) -> str:
         return emailParts[0] + '+Student_' + name.replace(' ','') + '@' + emailParts[1]
     else:
         return toEmail
-    
+
 # Based on the mode, create the target Email address.
 # The toEmail will the augmented with the student name, so when we receive
 # our copy of the email, we can tell that it was sent to the right place.
@@ -59,7 +68,12 @@ def mkTargetEmail(mode: str, toEmail: str, studentEmail: str, name: str) -> str:
         sys.exit(2)
 
 # Send invoices to all the students.
-def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list, month: str):
+def sendEmailsToStudents(mode: str,
+    reminder: bool,
+    fromEmail: str,
+    toEmail: str,
+    students: list,
+    month: str):
     pw = getEmailPassword()
     server = getSMTP_SSL(pw)
     for student in students:
@@ -69,7 +83,7 @@ def sendEmailsToStudents(mode: str, fromEmail: str, toEmail: str, students: list
                 continue
             targetEmail = mkTargetEmail(mode, 'gracetwhite@gmail.com', student['email'], student['name'])
             print('targetEmail = ', targetEmail)
-            message = mkEmail(fromEmail, targetEmail, month, student)
+            message = mkEmail(fromEmail, targetEmail, month, student, reminder)
             print('message = ', message)
             server.sendmail('AngelsdAcademyOnline@gmail.com', targetEmail, message.as_string())
         else:

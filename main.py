@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 import sys
 import argparse
 from sheetfu import SpreadsheetApp
@@ -15,6 +14,7 @@ argumentParser.add_argument('--SheetID', help='Id of Spreadsheet (part of the UR
 argumentParser.add_argument('--SheetName', help='Name of Google Sheet to Parse')
 argumentParser.add_argument('--Month', help='Month for invoices to process')
 argumentParser.add_argument('--Mode', help='Live or Preview: Live sends the emails to customers, preview sends the email to us')
+argumentParser.add_argument("-v", "--Reminder", help="Make it a reminder email", action="store_true")
 
 # Now parse the arguments passed in.
 parsedArguments = argumentParser.parse_args()
@@ -25,6 +25,8 @@ print('---> Mode =', parsedArguments.Mode)
 print('---> Month =', parsedArguments.Month)
 print('---> SheetId =', parsedArguments.SheetID)
 print('---> SheetName =', parsedArguments.SheetName)
+print('---> Reminder =', parsedArguments.Reminder)
+
 if not parsedArguments.Mode in ['Live', 'Preview']:
     print('Invalid Mode:', parsedArguments.Mode)
     sys.exit(2)
@@ -56,5 +58,10 @@ else:
 # email = mkEmail('AngelsdAcademyOnline@gmail.com', target, 'October', student)
 # print('---> email', email)
 # print('\n----------> Almost Emails\n')
-sendEmailsToStudents(parsedArguments.Mode, 'AngelsdAcademyOnline@gmail.com', 'gracetwhite@gmail.com', students, months[parsedArguments.Month])
+sendEmailsToStudents(parsedArguments.Mode,
+    parsedArguments.Reminder,
+    'AngelsdAcademyOnline@gmail.com',
+    'gracetwhite@gmail.com',
+    students,
+    months[parsedArguments.Month])
 # desourdesourde@gmail.com,gracetwhite+Student_AadhyaChiranji@gmail.com
