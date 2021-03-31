@@ -22,3 +22,23 @@ months = { 'Jan': 'January',
            'Dec': 'December'
            }
 
+# Find the index of the previous month, return -1 if a
+# bad month name is passed in.
+def previousMonthIdx(month: str) -> int:
+    if month in months3Letters:
+        idx = months3Letters.index(month)
+        if idx == 0:
+            return len(months3Letters) - 1
+        else:
+            return idx - 1
+    else:
+        return (-1)
+
+# Find the name of the previous months
+def previousMonth(month: str) -> str:
+    idx = previousMonthIdx(month)
+    if idx == -1:
+        # Garbage in, garbage out
+        return month
+    else:
+        return months3Letters[previousMonthIdx(month)]
