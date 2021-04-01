@@ -40,18 +40,18 @@ def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict, reminde
     message['From'] = 'AngelsAcademyOnline@gmail.com'
     message['To'] = targetEmail
     remind = 'Reminder, ' if reminder else ''
-    thisMonthTuitionStatement = tuitionStatement = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge'])
+    thisMonthTuitionStatement = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) +'.\n'
     if student['previousChargeOwed']:
-        previousMonth = 'Reminder, payment is still due for the previous month\'s charges of' + student['previousCharge'] + '\n'
+        previousMonth = 'Reminder, payment is still due for the previous month\'s charges of $' + str(student['previousCharge']) + '.\n'
         totalCharge = student['charge'] + student['previousCharge']
-        totalChargeStatement = 'The total charges are $' + str(totalCharge)
+        totalChargeStatement = 'The total charges are $' + str(totalCharge) + '.\n'
         tuitionStatement = thisMonthTuitionStatement + previousMonth + totalChargeStatement
     else:
         previousMonth = ''
         totalCharge = str(student['charge'])
-        tuitionStatement = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) + '\n'
-    zellePay = 'You can pay using zelle pay with email id' + 'gracetwhite@gmail.com\n' + 'Please include your child\'s name in the description part of the payment\n'
-    angelsEIN = 'Our EIN is 54-2192560\n'
+        tuitionStatement = thisMonthTuitionStatement
+    zellePay = 'You can pay using zelle pay with email id ' + 'gracetwhite@gmail.com.\n' + 'Please include your child\'s name in the description part of the payment.\n'
+    angelsEIN = 'Angels Academy EIN is 54-2192560.\n'
     text = remind + tuitionStatement + zellePay + angelsEIN
     part1 = MIMEText(text, 'plain')
     message.attach(part1)

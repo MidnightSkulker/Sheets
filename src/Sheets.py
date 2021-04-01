@@ -8,6 +8,19 @@ blue = '#0000ff'   # Paid
 green = '#37761c'  # Paid Cash
 purple = '#9900ff' # Paid off with debt from March
 black = '#000000'  # Due
+pink = '#dd7e6b'   # Gone or on break
+otherPink = '#e6b8ae'
+
+# Prepare a color for printing.
+def outColor(color: str):
+    if color == red: return 'red'
+    if color == blue: return 'blue'
+    if color == black or not color: return 'black'
+    if color == purple: return 'purple'
+    if color == green: return 'green'
+    if color == pink or color == otherPink: return 'pink'
+    return ('unknown: ' + color)
+
 colorsToIgnore = [red, blue, green, purple] # Colors ignore in the student names column.
 namesToIgnore = ['Totals', 'Remaining', 'Check Sum', 'Paid', 'Debt'] # Names to ignore in the student names Column.
 # Row containing the months (Sep, Oct, ...)
@@ -31,8 +44,8 @@ def paymentStatus(amount: str, color: str) -> str:
 
 # Determine if a charge is due.
 def isDue(color: str) -> bool:
-    if color == black: True
-    else: False
+    if color == black or not color: return True
+    else: return False
 
 # Find a column for the specified month
 # in the row that has month headings.
@@ -73,14 +86,14 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         print('-*-*-*-*-> No column found for month:', month)
         return None
     names = []
-    for j in range(1,maxRow):
+    for j in range(1, maxRow):
         potentialStudent = values[j][0]   # Student Name.
         attendanceStatus = values[j][1]   # Gone or Break.
         # Values for the current month charge.
         charge = values[j][monthCol]      # Charge for the student for the month.
         chargeColor = colors[j][monthCol] # Font color of the charge.
         # Values for the previous month charge.
-        previousCharge = colors[j][monthCol - 1]
+        previousCharge = values[j][monthCol - 1]
         previousChargeColor = colors[j][monthCol - 1]
         # Figure out which rows to ignore.
         # Ignore student names that are numeric.
