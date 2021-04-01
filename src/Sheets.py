@@ -17,7 +17,7 @@ monthRow = 0 # I.e. the first row of the sheet
 # Determine the payment status, based on the color of the entry.
 def paymentStatus(amount: str, color: str) -> str:
     status = 'Unknown'
-    if amount == None or amount == '':
+    if amount == None or amount == '' or int(amount) == 0:
         status = 'No Charge'
     elif color == black:
         status = 'Due'
@@ -29,7 +29,13 @@ def paymentStatus(amount: str, color: str) -> str:
         status = 'Cash'
     return status
 
-# Find a column for the specified month in the row that has month headings.
+# Determine if a charge is due.
+def isDue(color: str) -> bool:
+    if color == black: True
+    else: False
+
+# Find a column for the specified month
+# in the row that has month headings.
 def getMonthCol(data_range: object, month: str) -> int:
     values = data_range.get_values()
     maxCol = data_range.get_max_column()
@@ -61,15 +67,22 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
     maxRow = data_range.get_max_row()       # Number of rows used in the sheet.
     # Determine which column is for the month requested.
     monthCol = getMonthCol(data_range, month)
+    # And the column for the previous months
+    previousMonthCol = monthCol - 1
     if monthCol == None:
         print('-*-*-*-*-> No column found for month:', month)
         return None
     names = []
-    for j in range(0,maxRow):
+    for j in range(1,maxRow):
         potentialStudent = values[j][0]   # Student Name.
         attendanceStatus = values[j][1]   # Gone or Break.
+        # Values for the current month charge.
         charge = values[j][monthCol]      # Charge for the student for the month.
         chargeColor = colors[j][monthCol] # Font color of the charge.
+        # Values for the previous month charge.
+        previousCharge = colors[j][monthCol - 1]
+        previousChargeColor = colors[j][monthCol - 1]
+        # Figure out which rows to ignore.
         # Ignore student names that are numeric.
         if str(potentialStudent).isnumeric(): continue
         # Ignore students names that are an empty cell.
@@ -85,6 +98,8 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         # Compute the charge color from the rgb hex value for the cell with the charge.
         if not chargeColor: chargeColor = '#000000' # black
         chargeStatus = paymentStatus(charge, chargeColor)
+        previousChargeStatus = paymentStatus(charge, chargeColor)
+        # Get the name of the color from the color code.
         try:
             chargeColor = hex_to_name(chargeColor)
         except:
@@ -97,6 +112,8 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         studentInfo = { 'name': potentialStudent
                       , 'charge': charge
                       , 'color': chargeColor
-                      , 'status': chargeStatus }
+                      , 'status': chargeStatus
+                      , 'previousCharge': previousCharge
+                      , 'previousChargeOwed': isDue(previousChargeColor) }
         names.append(studentInfo) # Add to the list of students.
     return names
