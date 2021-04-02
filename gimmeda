@@ -34,6 +34,9 @@ then
 			# Reminder argument is set.
 			echo "Processing for teacher ${1} in mode ${2} for month ${1}"
 			echo "The reminder argument ($4) is set"
+			sheetid=${sheetID[$teacher]}
+			sheetname=${sheetName[$teacher]}
+			python3 main.py --SheetID=$sheetid --SheetName=$sheetname --Mode=$mode --Month=$month --Reminder
 		elif [[ -n $4 ]]
 		then
 			echo "Reminder argument ($4) is invalid."
@@ -42,7 +45,7 @@ then
 			echo "The reminder argument is not set"
 			sheetid=${sheetID[$teacher]}
 			sheetname=${sheetName[$teacher]}
-			# python3 main.py --SheetID=$sheetid --SheetName=$sheetname --Mode=$mode --Month=$month
+			python3 main.py --SheetID=$sheetid --SheetName=$sheetname --Mode=$mode --Month=$month
 		fi
 	else
 		echo "One of $mode or $month is bad."
