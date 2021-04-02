@@ -3,6 +3,7 @@
 # Argument 1 is teacher, which must be 'Grace', 'Mythili', or 'Teacher'
 # Argument 2 is mode, which must be 'Preview' or 'Live'.
 # Argument 3 is month abbreviation, e.g. Jan, Feb.
+# Argument 4 is optional, it is the reminder mode flag
 teacher=$1
 mode=$2
 month=$3
@@ -21,30 +22,31 @@ sheetName[Mythili]=MythilisClass
 sheetID[Lakshmi]=1EXk6GIdfHvA3vwySgtIKjP8KCeVNLxbfZO_761FkmiI
 sheetName[Lakshmi]=Lakshmi
 
-if [[ $# -ne 3 ]]
-then
-	echo "Must have 3 arguments:"
-	echo "Arg1 is teacher (Grace, Mythili, or Lakshmi)"
-	echo "Arg2 is mode (Preview or Live)"
-	echo "Arg3 month abbreviation (e.g. Jan, Feb ...)"
-	exit 4
-fi
-
 # Validate the arguments
-if [[ -v "modes[$mode]"  && -v "months[$month]" ]]
+if [[ -v "sheetID[$teacher]" && -v "sheetName[$teacher]" ]]
 then
-	if [[ -v "sheetID[$teacher]" && "sheetName[$teacher]" ]]
+	# The teacher argument is valid.
+	if [[ -v "modes[$mode]"  && -v "months[$month]" ]]
 	then
-		sheetid=${sheetID[$teacher]}
-		sheetname=${sheetName[$teacher]}
-		echo "Processing for teacher ${1} in mode ${2} for month ${1},"
-		echo "using sheetid=$sheetid"
-		echo "and sheetname=$sheetname"
-	  python3 main.py --SheetID=$sheetid --SheetName=$sheetname --Mode=$mode --Month=$month
+		# The mode argument and the month argument are valid.
+		if [[ $4 == "Reminder" ]]
+		then
+			# Reminder argument is set.
+			echo "Processing for teacher ${1} in mode ${2} for month ${1}"
+			echo "The reminder argument ($4) is set"
+		elif [[ -n $4 ]]
+		then
+			echo "Reminder argument ($4) is invalid."
+		else
+			echo "Processing for teacher ${1} in mode ${2} for month ${1}"
+			echo "The reminder argument is not set"
+			sheetid=${sheetID[$teacher]}
+			sheetname=${sheetName[$teacher]}
+			# python3 main.py --SheetID=$sheetid --SheetName=$sheetname --Mode=$mode --Month=$month
+		fi
 	else
-		echo "sheetID and/or sheetName does not exist for $teacher"
+		echo "One of $mode or $month is bad."
 	fi
 else
-	echo "Could not find either $mode or $month"
-  exit 2
+	echo "The teacher argment ($teacher) is invalid."
 fi
