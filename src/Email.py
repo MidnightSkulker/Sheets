@@ -42,8 +42,9 @@ def mkEmail(fromEmail: str, targetEmail: str, month: str, student: dict, reminde
     remind = 'Reminder, ' if reminder else ''
     thisMonthTuitionStatement = 'The tuition for ' + student['name'] + ' for the month of ' + month + ' is $' + str(student['charge']) +'.\n'
     if student['previousChargeOwed']:
+        print('mkEmail student ', student['name'])
         previousMonth = 'Reminder, payment is still due for the previous month\'s charges of $' + str(student['previousCharge']) + '.\n'
-        totalCharge = student['charge'] + student['previousCharge']
+        totalCharge = int(student['charge']) + int(student['previousCharge'])
         totalChargeStatement = 'The total charges are $' + str(totalCharge) + '.\n'
         tuitionStatement = thisMonthTuitionStatement + previousMonth + totalChargeStatement
     else:

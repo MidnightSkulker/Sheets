@@ -110,6 +110,7 @@ def getStudentSheetInfo(data_range: object, month: int) -> list:
         if (attendanceStatus == 'Break') or (attendanceStatus == 'Gone') or (attendanceStatus == 'X'): continue
         # Compute the charge color from the rgb hex value for the cell with the charge.
         if not chargeColor: chargeColor = '#000000' # black
+        print('monthCol=', monthCol, ', charge=', charge)
         chargeStatus = paymentStatus(charge, chargeColor)
         previousChargeStatus = paymentStatus(charge, chargeColor)
         # Get the name of the color from the color code.
