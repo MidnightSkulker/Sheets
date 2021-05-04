@@ -1,0 +1,2 @@
+#!/usr/local/bin/bash
+cloc main.py gimmeda grace src

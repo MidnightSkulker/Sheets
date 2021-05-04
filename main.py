@@ -50,7 +50,6 @@ else:
     print('Could not open', parsedArguments.SheetID, parsedArguments.SheetName)
     sys.exit(1)
 
-# print('---> len(students)', len(students))
 # student = students[0]
 # print('---> student', student)
 # target = mkTargetEmail(parsedArguments.Mode, 'gracetwhite@gmail.com', student['email'], student['name'])
@@ -64,4 +63,5 @@ sendEmailsToStudents(parsedArguments.Mode,
     'gracetwhite@gmail.com',
     students,
     months[parsedArguments.Month])
+print('---> Number of students: len(students)', len(students))
 # desourdesourde@gmail.com,gracetwhite+Student_AadhyaChiranji@gmail.com

@@ -1,6 +1,7 @@
 #!/usr/local/bin/bash
 # Argument 1 is the month 3 letter abbreviation, e.g. Jan, Feb, ...
 # Argument 2 is mode, which must be 'Preview' or 'Live'.
+# Argument 3 is the optional Reminder flag.
 
 if [[ $# -eq 2 ]]; then
 	echo "Processing for month ${1}, in mode ${2}"

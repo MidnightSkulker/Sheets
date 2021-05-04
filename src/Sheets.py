@@ -30,7 +30,7 @@ monthRow = 0 # I.e. the first row of the sheet
 # Determine the payment status, based on the color of the entry.
 def paymentStatus(amount: str, color: str) -> str:
     status = 'Unknown'
-    if amount == None or amount == '' or int(amount) == 0:
+    if amount == '':
         status = 'No Charge'
     elif color == black:
         status = 'Due'
