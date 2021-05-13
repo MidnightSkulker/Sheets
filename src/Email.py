@@ -86,7 +86,8 @@ def sendEmailsToStudents(mode: str,
     fromEmail: str,
     toEmail: str,
     students: list,
-    month: str):
+    month: str) -> int:
+    count : int = 0 # Count of emails sent
     pw = getEmailPassword()
     server = getSMTP_SSL(pw)
     for student in students:
@@ -99,6 +100,8 @@ def sendEmailsToStudents(mode: str,
             message = mkEmail(fromEmail, targetEmail, month, student, reminder)
             print('message = ', message)
             server.sendmail('AngelsdAcademyOnline@gmail.com', targetEmail, message.as_string())
+            count += 1
         else:
             continue
+    return count
     server.close()

@@ -57,11 +57,11 @@ else:
 # email = mkEmail('AngelsdAcademyOnline@gmail.com', target, 'October', student)
 # print('---> email', email)
 # print('\n----------> Almost Emails\n')
-sendEmailsToStudents(parsedArguments.Mode,
+numberSent = sendEmailsToStudents(parsedArguments.Mode,
     parsedArguments.Reminder,
     'AngelsdAcademyOnline@gmail.com',
     'gracetwhite@gmail.com',
     students,
     months[parsedArguments.Month])
-# print('---> Number of students: len(students)', len(students))
+print('---> Number of emails sent: ', numberSent, '\n')
 # desourdesourde@gmail.com,gracetwhite+Student_AadhyaChiranji@gmail.com
