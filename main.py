@@ -63,5 +63,5 @@ sendEmailsToStudents(parsedArguments.Mode,
     'gracetwhite@gmail.com',
     students,
     months[parsedArguments.Month])
-print('---> Number of students: len(students)', len(students))
+# print('---> Number of students: len(students)', len(students))
 # desourdesourde@gmail.com,gracetwhite+Student_AadhyaChiranji@gmail.com
