@@ -30,8 +30,9 @@ print('---> Reminder =', parsedArguments.Reminder)
 if not parsedArguments.Mode in ['Live', 'Preview']:
     print('Invalid Mode:', parsedArguments.Mode)
     sys.exit(2)
-if not parsedArguments.Month in months.keys():
-    print('Invalid Month:', parsedArguments.Month)
+# The month argument has a month and a year, e.g. 'Jun20' or 'Apr21'
+if not parsedArguments.Month[0:3] in months.keys():
+    print('Invalid Month:', parsedArguments.Month, parsedArguments.Month[0:3])
     sys.exit(3)
 
 # ---- Google Sheets
@@ -62,6 +63,6 @@ numberSent = sendEmailsToStudents(parsedArguments.Mode,
     'AngelsdAcademyOnline@gmail.com',
     'gracetwhite@gmail.com',
     students,
-    months[parsedArguments.Month])
+    months[parsedArguments.Month[0:3]])
 print('---> Number of emails sent: ', numberSent, '\n')
 # desourdesourde@gmail.com,gracetwhite+Student_AadhyaChiranji@gmail.com
